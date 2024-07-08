@@ -1,0 +1,13 @@
+.root {
+    height: 10px;
+    position: fixed;
+    top: 0;
+}
+
+.viewVariantDefault {
+    background-color: green;
+}
+
+.viewVariantAccent {
+    background-color: red;
+}
