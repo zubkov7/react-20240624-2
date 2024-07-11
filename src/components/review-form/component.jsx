@@ -1,4 +1,10 @@
+import { useEffect } from "react";
+import { useRef } from "react";
 import { useReducer } from "react";
+import classnames from "classnames";
+
+import styles from "./styles.module.css";
+import { useTheme } from "../theme-context/component";
 
 const INITIAL_FORM = {
   name: "",
@@ -27,6 +33,15 @@ const useForm = (initialValue) => {
 
 export const ReviewForm = () => {
   const [form, dispatch] = useForm(INITIAL_FORM);
+  const nameInputRef = useRef();
+
+  const { value: themeMode } = useTheme();
+
+  useEffect(() => {
+    nameInputRef.current.focus();
+
+    console.log(nameInputRef.current.clientHeight);
+  }, [nameInputRef.current]);
 
   const { name, text, address } = form;
 
@@ -35,6 +50,7 @@ export const ReviewForm = () => {
       <div>
         <span>Name</span>
         <input
+          ref={nameInputRef}
           value={name}
           onChange={(event) => {
             dispatch({ type: "setName", payload: event.target.value });
@@ -45,6 +61,10 @@ export const ReviewForm = () => {
         <span>Text</span>
         <input
           value={text}
+          ref={() => {
+            // send some analytics
+            console.log("text input showed");
+          }}
           onChange={(event) => {
             dispatch({ type: "setText", payload: event.target.value });
           }}
@@ -59,7 +79,14 @@ export const ReviewForm = () => {
           }}
         />
       </div>
-      <button>Save</button>
+      <button
+        className={classnames({
+          [styles.lightButton]: themeMode === "light",
+          [styles.darkButton]: themeMode === "dark",
+        })}
+      >
+        Save
+      </button>
       <button onClick={() => dispatch({ type: "clear" })}>Clear</button>
     </div>
   );

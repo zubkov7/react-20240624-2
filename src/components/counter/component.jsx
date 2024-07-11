@@ -1,7 +1,8 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 
 const useCount = () => {
   const [count, setCount] = useState(0);
+  const intervalRef = useRef();
 
   const increment = useCallback(() => {
     setCount((prevState) => prevState + 1);
@@ -11,15 +12,31 @@ const useCount = () => {
     setCount((prevState) => prevState - 1);
   }, []);
 
+  useEffect(() => {
+    if (!intervalRef.current) {
+      intervalRef.current = setInterval(() => increment(), 500);
+    }
+
+    return () => {
+      clearInterval(intervalRef.current);
+    };
+  }, [increment]);
+
+  const clear = useCallback(() => {
+    clearInterval(intervalRef.current);
+    setCount(0);
+  }, []);
+
   return {
     count,
     increment,
     decrement,
+    clear,
   };
 };
 
 export const Counter = () => {
-  const { count, decrement, increment } = useCount();
+  const { count, decrement, increment, clear } = useCount();
 
   useEffect(() => {
     const onScroll = () => console.log("scroll");
@@ -36,6 +53,7 @@ export const Counter = () => {
       <button onClick={increment}>+</button>
       {count}
       <button onClick={decrement}>-</button>
+      <button onClick={clear}>clear</button>
     </div>
   );
 };
