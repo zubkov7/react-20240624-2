@@ -1,21 +1,20 @@
-import { headphones } from "../../constants/mock";
-import { Headphone } from "../headphone/component";
+import { Provider } from "react-redux";
 import { Layout } from "../layout/component";
 import { ThemeContextProvider } from "../theme-context/component";
 import { ToggleThemeButton } from "../toggle-theme-button/component";
+import { store } from "../../redux";
+import { HeadphonesListContainer } from "../headphones-list/container";
 
 export const App = () => {
   return (
-    <ThemeContextProvider>
-      <div>
+    <Provider store={store}>
+      <ThemeContextProvider>
         <ToggleThemeButton />
         <Layout>
-          <div>headphones list</div>
-          {headphones.map(({ name, id, reviews, price }) => (
-            <Headphone name={name} id={id} reviews={reviews} price={price} />
-          ))}
+          <h2>headphones list</h2>
+          <HeadphonesListContainer />
         </Layout>
-      </div>
-    </ThemeContextProvider>
+      </ThemeContextProvider>
+    </Provider>
   );
 };

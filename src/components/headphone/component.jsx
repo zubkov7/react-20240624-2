@@ -1,14 +1,15 @@
-import { Reviews } from "../reviews/component";
+import { CodecList } from "../codec-list/component";
 import { Counter } from "../counter/component";
+import { ReviewList } from "../review-list/component";
 
-export const Headphone = ({ name, id, reviews, price }) => {
+export const Headphone = ({ name, id, reviewIds, codecIds }) => {
   return (
     <div>
       <h2>
         {name} - {id}
       </h2>
-      <h3>Price: {price}</h3>
-      <Reviews reviews={reviews} />
+      <ReviewList reviewIds={reviewIds} />
+      <CodecList codecIds={codecIds} />
       <Counter />
     </div>
   );
