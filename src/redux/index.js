@@ -1,8 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { HeadphoneSlice } from "./entities/headphone";
-import { ReviewSlice } from "./entities/review";
-import { UserSlice } from "./entities/user";
-import { CodecSlice } from "./entities/codec";
+import { CartSlice } from "./ui/cart";
+import { HeadphoneSlice } from "./entities/headphone/headphone";
+import { ReviewSlice } from "./entities/review/review";
+import { UserSlice } from "./entities/user/user";
+import { CodecSlice } from "./entities/codec/codec";
 
 export const store = configureStore({
   reducer: {
@@ -10,5 +11,11 @@ export const store = configureStore({
     [ReviewSlice.name]: ReviewSlice.reducer,
     [UserSlice.name]: UserSlice.reducer,
     [CodecSlice.name]: CodecSlice.reducer,
+    [CartSlice.name]: CartSlice.reducer,
   },
+  // middleware: (getDefaultMiddleware) =>
+  //   getDefaultMiddleware().concat(() => (next) => (action) => {
+  //     console.log(action);
+  //     next(action);
+  //   }),
 });

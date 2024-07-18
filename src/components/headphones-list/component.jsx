@@ -1,7 +1,7 @@
 import { HeadphoneContainer } from "../headphone/container";
 
 export const HeadphonesList = ({ headphoneIds }) => {
-  if (!headphoneIds.length) {
+  if (!headphoneIds?.length) {
     return null;
   }
 

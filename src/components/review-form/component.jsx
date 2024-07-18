@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useRef } from "react";
 import { useReducer } from "react";
 import classnames from "classnames";
@@ -33,15 +32,8 @@ const useForm = (initialValue) => {
 
 export const ReviewForm = () => {
   const [form, dispatch] = useForm(INITIAL_FORM);
-  const nameInputRef = useRef();
 
   const { value: themeMode } = useTheme();
-
-  useEffect(() => {
-    nameInputRef.current.focus();
-
-    console.log(nameInputRef.current.clientHeight);
-  }, [nameInputRef.current]);
 
   const { name, text, address } = form;
 
@@ -50,7 +42,6 @@ export const ReviewForm = () => {
       <div>
         <span>Name</span>
         <input
-          ref={nameInputRef}
           value={name}
           onChange={(event) => {
             dispatch({ type: "setName", payload: event.target.value });
@@ -61,10 +52,6 @@ export const ReviewForm = () => {
         <span>Text</span>
         <input
           value={text}
-          ref={() => {
-            // send some analytics
-            console.log("text input showed");
-          }}
           onChange={(event) => {
             dispatch({ type: "setText", payload: event.target.value });
           }}

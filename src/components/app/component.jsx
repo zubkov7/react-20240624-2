@@ -4,6 +4,7 @@ import { ThemeContextProvider } from "../theme-context/component";
 import { ToggleThemeButton } from "../toggle-theme-button/component";
 import { store } from "../../redux";
 import { HeadphonesListContainer } from "../headphones-list/container";
+import { Cart } from "../cart/components";
 
 export const App = () => {
   return (
@@ -13,6 +14,7 @@ export const App = () => {
         <Layout>
           <h2>headphones list</h2>
           <HeadphonesListContainer />
+          <Cart />
         </Layout>
       </ThemeContextProvider>
     </Provider>

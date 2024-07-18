@@ -1,15 +1,17 @@
 import { useState, useCallback } from "react";
 
-const useCount = () => {
+const useCount = ({ onIncrement, onDecrement }) => {
   const [count, setCount] = useState(0);
 
   const increment = useCallback(() => {
     setCount((prevState) => prevState + 1);
-  }, []);
+    onIncrement();
+  }, [onIncrement]);
 
   const decrement = useCallback(() => {
     setCount((prevState) => prevState - 1);
-  }, []);
+    onDecrement();
+  }, [onDecrement]);
 
   return {
     count,
@@ -18,8 +20,11 @@ const useCount = () => {
   };
 };
 
-export const Counter = () => {
-  const { count, decrement, increment } = useCount();
+export const Counter = ({ onIncrement, onDecrement }) => {
+  const { count, decrement, increment } = useCount({
+    onIncrement,
+    onDecrement,
+  });
 
   return (
     <div>
