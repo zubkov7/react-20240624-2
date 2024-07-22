@@ -5,26 +5,15 @@ const entityAdapter = createEntityAdapter();
 
 export const ReviewSlice = createSlice({
   name: "review",
-  initialState: entityAdapter.getInitialState({
-    requestStatus: "idle",
-  }),
+  initialState: entityAdapter.getInitialState(),
   selectors: {
     selectReviewIds: (state) => state.ids,
     selectReviewById: (state, id) => state.entities[id],
   },
   extraReducers: (builder) =>
-    builder
-      .addCase(getReviews.pending, (state) => {
-        state.requestStatus = "pending";
-      })
-      .addCase(getReviews.fulfilled, (state, { payload }) => {
-        state.requestStatus = "fulfilled";
-
-        entityAdapter.addMany(state, payload);
-      })
-      .addCase(getReviews.rejected, (state) => {
-        state.requestStatus = "rejected";
-      }),
+    builder.addCase(getReviews.fulfilled, (state, { payload }) => {
+      entityAdapter.addMany(state, payload);
+    }),
 });
 
 export const { selectReviewIds, selectReviewById } = ReviewSlice.selectors;

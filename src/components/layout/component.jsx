@@ -5,8 +5,8 @@ import { ProgressBar } from "../progress-bar/component";
 export const Layout = ({ children }) => {
   return (
     <div>
-      <Header />
       <ProgressBar />
+      <Header />
       {children}
       <Footer />
     </div>

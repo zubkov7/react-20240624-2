@@ -4,6 +4,7 @@ import { HeadphoneSlice } from "./entities/headphone/headphone";
 import { ReviewSlice } from "./entities/review/review";
 import { UserSlice } from "./entities/user/user";
 import { CodecSlice } from "./entities/codec/codec";
+import { RequestSlice } from "./ui/request";
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     [UserSlice.name]: UserSlice.reducer,
     [CodecSlice.name]: CodecSlice.reducer,
     [CartSlice.name]: CartSlice.reducer,
+    [RequestSlice.name]: RequestSlice.reducer,
   },
   // middleware: (getDefaultMiddleware) =>
   //   getDefaultMiddleware().concat(() => (next) => (action) => {

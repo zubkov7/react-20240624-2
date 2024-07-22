@@ -5,25 +5,14 @@ const entityAdapter = createEntityAdapter();
 
 export const CodecSlice = createSlice({
   name: "codec",
-  initialState: entityAdapter.getInitialState({
-    requestStatus: "idle",
-  }),
+  initialState: entityAdapter.getInitialState(),
   selectors: {
     selectCodecById: (state, id) => state.entities[id],
   },
   extraReducers: (builder) =>
-    builder
-      .addCase(getCodecs.pending, (state) => {
-        state.requestStatus = "pending";
-      })
-      .addCase(getCodecs.fulfilled, (state, { payload }) => {
-        state.requestStatus = "fulfilled";
-
-        entityAdapter.addMany(state, payload);
-      })
-      .addCase(getCodecs.rejected, (state) => {
-        state.requestStatus = "rejected";
-      }),
+    builder.addCase(getCodecs.fulfilled, (state, { payload }) => {
+      entityAdapter.addMany(state, payload);
+    }),
 });
 
 export const { selectCodecById } = CodecSlice.selectors;

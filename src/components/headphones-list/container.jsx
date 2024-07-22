@@ -1,30 +1,31 @@
 import { useSelector } from "react-redux";
 import { HeadphonesList } from "./component";
-import { useDispatch } from "react-redux";
-import { useEffect } from "react";
 import { getHeadphones } from "../../redux/entities/headphone/get-headphones";
-import {
-  selectHeadphonesIds,
-  selectRequestStatus,
-} from "../../redux/entities/headphone/headphone";
+import { selectHeadphonesIds } from "../../redux/entities/headphone/headphone";
 import { getUsers } from "../../redux/entities/user/get-users";
+import { useRequest } from "../../hooks/use-request";
 
 export const HeadphonesListContainer = () => {
   const ids = useSelector(selectHeadphonesIds);
-  const requestStatus = useSelector(selectRequestStatus);
 
-  const dispatch = useDispatch();
+  const headphonesRequestStatus = useRequest(getHeadphones);
+  const usersRequestStatus = useRequest(getUsers);
 
-  useEffect(() => {
-    dispatch(getHeadphones());
-    dispatch(getUsers());
-  }, [dispatch]);
+  const isLoading =
+    (headphonesRequestStatus === "pending") |
+      (headphonesRequestStatus === "idle") ||
+    usersRequestStatus === "pending" ||
+    usersRequestStatus === "idle";
 
-  if (requestStatus === "idle" || requestStatus === "pending") {
+  const isFailed =
+    headphonesRequestStatus === "rejected" ||
+    usersRequestStatus === "rejectede";
+
+  if (isLoading) {
     return "loading";
   }
 
-  if (requestStatus === "rejected") {
+  if (isFailed) {
     return "error";
   }
 

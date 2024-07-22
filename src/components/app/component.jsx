@@ -12,7 +12,6 @@ export const App = () => {
       <ThemeContextProvider>
         <ToggleThemeButton />
         <Layout>
-          <h2>headphones list</h2>
           <HeadphonesListContainer />
           <Cart />
         </Layout>
