@@ -1,16 +1,16 @@
-import { CodecContainer } from "../codec/container";
+import { Codec } from "../codec/component";
 
-export const CodecList = ({ codecIds }) => {
-  if (!codecIds.length) {
+export const CodecList = ({ codecs }) => {
+  if (!codecs.length) {
     return null;
   }
 
   return (
     <div>
       <ul>
-        {codecIds.map((id) => (
+        {codecs.map(({ type }) => (
           <li>
-            <CodecContainer id={id} />
+            <Codec type={type} />
           </li>
         ))}
       </ul>

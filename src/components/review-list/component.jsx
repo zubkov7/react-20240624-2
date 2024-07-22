@@ -1,21 +1,28 @@
 import { ReviewForm } from "../review-form/component";
-import { ReviewContainer } from "../review/container";
+import { Review } from "../review/component";
 
-export const ReviewList = ({ reviewIds }) => {
-  if (!reviewIds.length) {
+export const ReviewList = ({
+  reviews,
+  onCreateReview,
+  isCreateReviewLoading,
+}) => {
+  if (!reviews.length) {
     return null;
   }
 
   return (
     <div>
       <ul>
-        {reviewIds.map((id) => (
+        {reviews.map(({ text, user, rating, id }) => (
           <li>
-            <ReviewContainer id={id} />
+            <Review key={id} text={text} userId={user} rating={rating} />
           </li>
         ))}
       </ul>
-      <ReviewForm />
+      <ReviewForm
+        onCreateReview={onCreateReview}
+        isCreateReviewLoading={isCreateReviewLoading}
+      />
     </div>
   );
 };

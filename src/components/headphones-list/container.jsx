@@ -1,33 +1,31 @@
-import { useSelector } from "react-redux";
 import { HeadphonesList } from "./component";
-import { getHeadphones } from "../../redux/entities/headphone/get-headphones";
-import { selectHeadphonesIds } from "../../redux/entities/headphone/headphone";
-import { getUsers } from "../../redux/entities/user/get-users";
-import { useRequest } from "../../hooks/use-request";
+import {
+  useGetHeadphonesQuery,
+  useGetUsersQuery,
+} from "../../redux/services/api";
 
 export const HeadphonesListContainer = () => {
-  const ids = useSelector(selectHeadphonesIds);
+  const { data, isError, isFetching, isLoading, refetch } =
+    useGetHeadphonesQuery();
 
-  const headphonesRequestStatus = useRequest(getHeadphones);
-  const usersRequestStatus = useRequest(getUsers);
-
-  const isLoading =
-    (headphonesRequestStatus === "pending") |
-      (headphonesRequestStatus === "idle") ||
-    usersRequestStatus === "pending" ||
-    usersRequestStatus === "idle";
-
-  const isFailed =
-    headphonesRequestStatus === "rejected" ||
-    usersRequestStatus === "rejectede";
+  useGetUsersQuery();
 
   if (isLoading) {
     return "loading";
   }
 
-  if (isFailed) {
+  if (isFetching) {
+    return "isFetching";
+  }
+
+  if (isError || !data.length) {
     return "error";
   }
 
-  return <HeadphonesList headphoneIds={ids} />;
+  return (
+    <div>
+      <button onClick={refetch}>refetch</button>
+      <HeadphonesList headphones={data} />
+    </div>
+  );
 };

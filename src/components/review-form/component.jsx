@@ -1,4 +1,3 @@
-import { useRef } from "react";
 import { useReducer } from "react";
 import classnames from "classnames";
 
@@ -6,19 +5,17 @@ import styles from "./styles.module.css";
 import { useTheme } from "../theme-context/component";
 
 const INITIAL_FORM = {
-  name: "",
   text: "",
-  address: "",
+  rating: "",
+  user: "jg4985gj94",
 };
 
 function reducer(state, { type, payload }) {
   switch (type) {
-    case "setName":
-      return { ...INITIAL_FORM, name: payload };
     case "setText":
       return { ...state, text: payload };
-    case "setAddress":
-      return { ...state, address: payload };
+    case "setRating":
+      return { ...state, rating: payload };
     case "clear":
       return INITIAL_FORM;
     default:
@@ -30,24 +27,15 @@ const useForm = (initialValue) => {
   return useReducer(reducer, initialValue);
 };
 
-export const ReviewForm = () => {
+export const ReviewForm = ({ onCreateReview, isCreateReviewLoading }) => {
   const [form, dispatch] = useForm(INITIAL_FORM);
 
   const { value: themeMode } = useTheme();
 
-  const { name, text, address } = form;
+  const { text, rating } = form;
 
   return (
     <div>
-      <div>
-        <span>Name</span>
-        <input
-          value={name}
-          onChange={(event) => {
-            dispatch({ type: "setName", payload: event.target.value });
-          }}
-        />
-      </div>
       <div>
         <span>Text</span>
         <input
@@ -58,11 +46,11 @@ export const ReviewForm = () => {
         />
       </div>
       <div>
-        <span>Address</span>
+        <span>Rating</span>
         <input
-          value={address}
+          value={rating}
           onChange={(event) => {
-            dispatch({ type: "setAddress", payload: event.target.value });
+            dispatch({ type: "setRating", payload: event.target.value });
           }}
         />
       </div>
@@ -71,8 +59,13 @@ export const ReviewForm = () => {
           [styles.lightButton]: themeMode === "light",
           [styles.darkButton]: themeMode === "dark",
         })}
+        onClick={() => {
+          onCreateReview(form);
+          dispatch({ type: "clear" });
+        }}
+        disabled={isCreateReviewLoading}
       >
-        Save
+        {isCreateReviewLoading ? "...loading" : "Save"}
       </button>
       <button onClick={() => dispatch({ type: "clear" })}>Clear</button>
     </div>

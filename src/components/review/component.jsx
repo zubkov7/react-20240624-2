@@ -5,9 +5,7 @@ export const Review = ({ text, userId, rating }) => {
     <div>
       <div>text - {text}</div>
       <div>rating - {rating}</div>
-      <div>
-        user - <UserContainer id={userId} />
-      </div>
+      <UserContainer id={userId} />
     </div>
   );
 };

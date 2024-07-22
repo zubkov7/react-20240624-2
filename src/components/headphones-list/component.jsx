@@ -1,25 +1,28 @@
 import { useState } from "react";
 import { HeadphoneContainer } from "../headphone/container";
-import { HeadphoneTabContainer } from "../headphone-tab/container";
+import { HeadphoneTab } from "../headphone-tab/component";
 
-export const HeadphonesList = ({ headphoneIds }) => {
-  const [activeHeadphoneId, setActiveHeadphoneId] = useState(headphoneIds?.[0]);
+export const HeadphonesList = ({ headphones }) => {
+  const [activeHeadphone, setActiveHeadphone] = useState(headphones?.[0]);
 
   return (
     <div>
       <ul>
-        {headphoneIds.map((id) => (
+        {headphones.map((item) => (
           <li>
-            <HeadphoneTabContainer
-              id={id}
-              onClick={setActiveHeadphoneId}
-              isActive={id === activeHeadphoneId}
+            <HeadphoneTab
+              name={item.name}
+              onClick={() => setActiveHeadphone(item)}
+              isActive={activeHeadphone.id === item.id}
             />
           </li>
         ))}
       </ul>
-      {activeHeadphoneId && (
-        <HeadphoneContainer key={activeHeadphoneId} id={activeHeadphoneId} />
+      {activeHeadphone && (
+        <HeadphoneContainer
+          key={activeHeadphone.id}
+          headphone={activeHeadphone}
+        />
       )}
     </div>
   );

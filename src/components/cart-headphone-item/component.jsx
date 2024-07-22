@@ -1,16 +1,17 @@
-import { useSelector } from "react-redux";
-import { selectHeadphoneById } from "../../redux/entities/headphone/headphone";
+import { useGetHeadphonesQuery } from "../../redux/services/api";
 
 export const CartHeadphoneItem = ({ id, amount }) => {
-  const headphone = useSelector((state) => selectHeadphoneById(state, id));
+  const { data: headphones } = useGetHeadphonesQuery();
 
-  if (!headphone.name) {
+  const { name } = headphones?.find((item) => item.id === id) || {};
+
+  if (!name) {
     return null;
   }
 
   return (
     <div>
-      {headphone.name} - {amount}
+      {name} - {amount}
     </div>
   );
 };

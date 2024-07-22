@@ -5,18 +5,24 @@ import { ReviewList } from "../review-list/component";
 export const Headphone = ({
   name,
   id,
-  reviewIds,
-  codecIds,
+  reviews,
+  codecs,
   handleAddToCart,
   handleRemoveFromCart,
+  onCreateReview,
+  isCreateReviewLoading,
 }) => {
   return (
     <div>
       <h2>
         {name} - {id}
       </h2>
-      <ReviewList reviewIds={reviewIds} />
-      <CodecList codecIds={codecIds} />
+      <ReviewList
+        reviews={reviews}
+        onCreateReview={onCreateReview}
+        isCreateReviewLoading={isCreateReviewLoading}
+      />
+      <CodecList codecs={codecs} />
       <Counter
         onDecrement={handleRemoveFromCart}
         onIncrement={handleAddToCart}
