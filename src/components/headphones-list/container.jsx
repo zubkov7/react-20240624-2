@@ -3,10 +3,10 @@ import {
   useGetHeadphonesQuery,
   useGetUsersQuery,
 } from "../../redux/services/api";
+import { Outlet } from "react-router-dom";
 
 export const HeadphonesListContainer = () => {
-  const { data, isError, isFetching, isLoading, refetch } =
-    useGetHeadphonesQuery();
+  const { data, isError, isFetching, isLoading } = useGetHeadphonesQuery();
 
   useGetUsersQuery();
 
@@ -24,8 +24,8 @@ export const HeadphonesListContainer = () => {
 
   return (
     <div>
-      <button onClick={refetch}>refetch</button>
       <HeadphonesList headphones={data} />
+      <Outlet />
     </div>
   );
 };

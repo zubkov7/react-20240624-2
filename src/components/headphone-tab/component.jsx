@@ -1,7 +1,19 @@
-export const HeadphoneTab = ({ name, onClick, isActive }) => {
+import { NavLink } from "react-router-dom";
+
+import styles from "./styles.module.css";
+import classNames from "classnames";
+
+export const HeadphoneTab = ({ name, to }) => {
   return (
-    <button disabled={isActive} onClick={onClick}>
+    <NavLink
+      className={({ isActive }) =>
+        classNames(styles.link, {
+          [styles.activeLink]: isActive,
+        })
+      }
+      to={to}
+    >
       {name}
-    </button>
+    </NavLink>
   );
 };

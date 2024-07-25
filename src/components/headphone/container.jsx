@@ -5,13 +5,20 @@ import { useDispatch } from "react-redux";
 import {
   useCreateReviewMutation,
   useGetCodecsByProductIdQuery,
+  useGetHeadphonesQuery,
   useGetReviewsByProductIdQuery,
 } from "../../redux/services/api";
+import { useParams } from "react-router-dom";
 
-export const HeadphoneContainer = ({ headphone }) => {
+export const HeadphoneContainer = () => {
   const dispatch = useDispatch();
 
-  const { id } = headphone || {};
+  const { headphoneId: id } = useParams();
+  // const [searchParams, setSearchParams] = useSearchParams();
+  // console.log(searchParams.get("id"));
+  // useEffect(() => {
+  //   setSearchParams((prev) => ({ ...prev, id: 123 }));
+  // }, [setSearchParams]);
 
   const handleAddToCart = useCallback(
     () => dispatch(addToCart(id)),
@@ -30,6 +37,13 @@ export const HeadphoneContainer = ({ headphone }) => {
   const [createReview, { isLoading: isCreateReviewLoading }] =
     useCreateReviewMutation();
 
+  const { data: headphone } = useGetHeadphonesQuery(undefined, {
+    selectFromResult: (result) => ({
+      ...result,
+      data: result.data.find((item) => item.id === id),
+    }),
+  });
+
   if (!headphone) {
     return null;
   }
@@ -38,19 +52,18 @@ export const HeadphoneContainer = ({ headphone }) => {
     return "loader";
   }
 
-  const { name, id: headphoneId } = headphone;
+  const { name } = headphone;
 
   return (
     <Headphone
+      key={id}
       name={name}
-      id={headphoneId}
+      id={id}
       reviews={reviews}
       codecs={codecs}
       handleAddToCart={handleAddToCart}
       handleRemoveFromCart={handleRemoveFromCart}
-      onCreateReview={(review) =>
-        createReview({ review, productId: headphoneId })
-      }
+      onCreateReview={(review) => createReview({ review, productId: IDBIndex })}
       isCreateReviewLoading={isCreateReviewLoading}
     />
   );
