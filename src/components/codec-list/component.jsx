@@ -8,8 +8,8 @@ export const CodecList = ({ codecs }) => {
   return (
     <div>
       <ul>
-        {codecs.map(({ type }) => (
-          <li>
+        {codecs.map(({ type, id }) => (
+          <li key={id}>
             <Codec type={type} />
           </li>
         ))}

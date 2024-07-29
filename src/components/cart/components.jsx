@@ -8,12 +8,12 @@ export const Cart = () => {
   return (
     <div>
       <h3>Cart</h3>
-      {!Boolean(cartItems.length) ? (
+      {!cartItems.length ? (
         "emty cart"
       ) : (
         <ul>
           {cartItems.map(({ id, amount }) => (
-            <li>
+            <li key={id}>
               <CartHeadphoneItem id={id} amount={amount} />
             </li>
           ))}

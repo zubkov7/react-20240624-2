@@ -31,17 +31,9 @@ const router = createBrowserRouter([
       },
     ],
   },
-  {
-    path: "/about",
-    element: <div>about</div>,
-  },
-  {
-    path: "/blocked",
-    element: <Navigate to='/' replace />,
-  },
 ]);
 
-export const App = () => {
+const App = () => {
   return (
     <Provider store={store}>
       <ThemeContextProvider>
@@ -50,3 +42,5 @@ export const App = () => {
     </Provider>
   );
 };
+
+export default App;

@@ -5,7 +5,7 @@ export const HeadphonesList = ({ headphones }) => {
     <div>
       <ul>
         {headphones.map((item) => (
-          <li>
+          <li key={item.id}>
             <HeadphoneTab name={item.name} to={item.id} />
           </li>
         ))}
