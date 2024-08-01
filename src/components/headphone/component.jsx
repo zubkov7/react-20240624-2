@@ -1,32 +1,21 @@
-import { CodecList } from "../codec-list/component";
-import { Counter } from "../counter/component";
-import { ReviewList } from "../review-list/component";
+import { Suspense } from "react";
+import { Reviews } from "../reviews/component";
+import { Codecs } from "../codecs/component";
 
-export const Headphone = ({
-  name,
-  id,
-  reviews,
-  codecs,
-  handleAddToCart,
-  handleRemoveFromCart,
-  onCreateReview,
-  isCreateReviewLoading,
-}) => {
+export const Headphone = ({ name, id }) => {
   return (
     <div>
       <h2>
         {name} - {id}
       </h2>
-      <ReviewList
-        reviews={reviews}
-        onCreateReview={onCreateReview}
-        isCreateReviewLoading={isCreateReviewLoading}
-      />
-      <CodecList codecs={codecs} />
-      <Counter
-        onDecrement={handleRemoveFromCart}
-        onIncrement={handleAddToCart}
-      />
+      <h3>Reviews</h3>
+      <Suspense fallback={<div>loading reviews .....</div>}>
+        <Reviews headphoneId={id} />
+      </Suspense>
+      <h3>Codecs</h3>
+      <Suspense fallback={<div>loading codecs .....</div>}>
+        <Codecs headphoneId={id} />
+      </Suspense>
     </div>
   );
 };

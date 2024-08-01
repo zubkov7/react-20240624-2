@@ -1,10 +1,8 @@
-import React, { useContext } from "react";
+"use client";
+
 import { useCallback } from "react";
 import { useState } from "react";
-
-const ThemeContext = React.createContext();
-
-export const useTheme = () => useContext(ThemeContext);
+import { ThemeContext } from ".";
 
 export const ThemeContextProvider = ({ children }) => {
   const [theme, setTheme] = useState("light");

@@ -1,11 +1,8 @@
-import { UserContainer } from "../user/container";
-
-export const Review = ({ text, userId, rating }) => {
+export const Review = ({ text, rating }) => {
   return (
     <div>
       <div>text - {text}</div>
       <div>rating - {rating}</div>
-      <UserContainer id={userId} />
     </div>
   );
 };
